@@ -20,11 +20,14 @@
         <p>Use code SAVE20 for 20% off!</p>
     </div>
 
+    <!-- Before/After Image Slider Section -->
+    {% section 'before-after-slider' %}
+
     {{ content_for_layout }}
     {{ content_for_footer }}
 
     <button id="back-to-top" class="back-to-top" title="Go to top">Top</button>
-    
+
     <script src="{{ 'banner.js' | asset_url }}"></script>
 </body>
 </html>
