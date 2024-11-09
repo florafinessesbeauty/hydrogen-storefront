@@ -1,0 +1,20 @@
+{
+    "current": {
+      "id": "1234567890",
+      "title": "Your Theme",
+      "sections": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo": "logo.png",
+            "menu": "main-menu"
+          }
+        }
+      },
+      "presets": {
+        "title": "Your Theme",
+        "category": "Custom"
+      }
+    }
+  }
+  

@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+            },
+            {
+                "type": "select",
+                "id": "menu",
+                "label": "Menu",
+                "options": [
+                    {
+                        "value": "main-menu",
+                        "label": "Main Menu"
+                    },
+                    {
+                        "value": "footer-menu",
+                        "label": "Footer Menu"
+                    }
+                ]
+            }
+        ]
+    }
+]
