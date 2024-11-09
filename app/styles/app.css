@@ -484,3 +484,134 @@ button.reset:hover:not(:has(> *)) {
 .account-logout {
   display: inline-block;
 }
+:root {
+  --main-bg-color: white;
+  --main-text-color: black;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+/* Industry-specific styles */
+.arts-crafts {
+  --main-bg-color: #FFD700; /* Gold */
+  --main-text-color: #8B4513; /* Saddle Brown */
+}
+
+.baby-kids {
+  --main-bg-color: #FFB6C1; /* Light Pink */
+  --main-text-color: #FF69B4; /* Hot Pink */
+}
+
+.books-music-video {
+  --main-bg-color: #6495ED; /* Cornflower Blue */
+  --main-text-color: #00008B; /* Dark Blue */
+}
+
+.business-equipment-supplies {
+  --main-bg-color: #708090; /* Slate Gray */
+  --main-text-color: #2F4F4F; /* Dark Slate Gray */
+}
+
+.clothing {
+  --main-bg-color: #FF4500; /* Orange Red */
+  --main-text-color: #2E8B57; /* Sea Green */
+}
+
+.electronics {
+  --main-bg-color: #4682B4; /* Steel Blue */
+  --main-text-color: #00008B; /* Dark Blue */
+}
+
+.food-drink {
+  --main-bg-color: #FF6347; /* Tomato */
+  --main-text-color: #8B0000; /* Dark Red */
+}
+
+.hardware-automotive {
+  --main-bg-color: #A9A9A9; /* Dark Gray */
+  --main-text-color: #696969; /* Dim Gray */
+}
+
+.health-beauty {
+  --main-bg-color: #FFC0CB; /* Pink */
+  --main-text-color: #800080; /* Purple */
+}
+
+.home-decor {
+  --main-bg-color: #8B4513; /* Saddle Brown */
+  --main-text-color: #CD853F; /* Peru */
+}
+
+.jewelry-accessories {
+  --main-bg-color: #FFD700; /* Gold */
+  --main-text-color: #8B0000; /* Dark Red */
+}
+
+.outdoor-garden {
+  --main-bg-color: #32CD32; /* Lime Green */
+  --main-text-color: #006400; /* Dark Green */
+}
+
+.pet-supplies {
+  --main-bg-color: #FF4500; /* Orange Red */
+  --main-text-color: #FFD700; /* Gold */
+}
+
+.restaurants {
+  --main-bg-color: #FF6347; /* Tomato */
+  --main-text-color: #8B0000; /* Dark Red */
+}
+
+.services {
+  --main-bg-color: #4682B4; /* Steel Blue */
+  --main-text-color: #5F9EA0; /* Cadet Blue */
+}
+
+.sports-recreation {
+  --main-bg-color: #00FA9A; /* Medium Spring Green */
+  --main-text-color: #FF4500; /* Orange Red */
+}
+
+.toys-games {
+  --main-bg-color: #FFD700; /* Gold */
+  --main-text-color: #FF6347; /* Tomato */
+}
+
+.other {
+  --main-bg-color: #D3D3D3; /* Light Gray */
+  --main-text-color: #808080; /* Gray */
+}
+
+/* Banner styles */
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: yellow; /* or dynamic based on industry */
+  color: black;
+  text-align: center;
+  z-index: 1000;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% { background-color: yellow; }
+  50% { background-color: orange; }
+  100% { background-color: yellow; }
+}
+
+.scroll-box {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  background-color: yellow; /* or dynamic based on industry */
+  color: black;
+  padding: 10px;
+  border: 2px solid black;
+  display: none;
+}
+
