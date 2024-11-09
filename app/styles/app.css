@@ -701,3 +701,26 @@ body {
   cursor: ew-resize;
   z-index: 10;
 }
+
+/* Breadcrumb styles */
+.breadcrumb {
+display: flex;
+flex-wrap: wrap;
+padding: 10px 0;
+list-style: none;
+}
+
+.breadcrumb a {
+color: #3498db;
+text-decoration: none;
+margin-right: 10px;
+}
+
+.breadcrumb span {
+color: #888;
+margin-right: 10px;
+}
+
+.breadcrumb a:hover {
+text-decoration: underline;
+}

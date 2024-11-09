@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
 </head>
 <body>
+    <nav class="breadcrumb">
+      {% for part in breadcrumbs %}
+        {% if part.url %}
+          <a href="{{ part.url }}">{{ part.name }}</a>
+        {% else %}
+          <span>{{ part.name }}</span>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  
+    {% section 'header' %}
+
     <div id="age-verifier" class="age-verifier">
         <div class="age-verifier-content">
             <h2>Are you 18 or older?</h2>
