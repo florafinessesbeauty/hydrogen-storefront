@@ -13,12 +13,20 @@
         {% if part.url %}
           <a href="{{ part.url }}">{{ part.name }}</a>
         {% else %}
-          <span>{{ part.name }}</a>
+          <span>{{ part.name }}</span>
         {% endif %}
       {% endfor %}
     </nav>
-  
+
     {% section 'header' %}
+    
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form action="/search" method="get">
+            <input type="text" name="q" placeholder="Search products..." aria-label="Search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
     <div id="age-verifier" class="age-verifier">
         <div class="age-verifier-content">
