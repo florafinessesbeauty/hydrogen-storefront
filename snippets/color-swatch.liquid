@@ -1,0 +1,9 @@
+{% comment %}
+  Create color swatches for product variants.
+{% endcomment %}
+{% assign colors = product.variants | map: 'color' | uniq %}
+<div class="color-swatches">
+  {% for color in colors %}
+    <div class="swatch" style="background-color: {{ color | handleize }}"></div>
+  {% endfor %}
+</div>

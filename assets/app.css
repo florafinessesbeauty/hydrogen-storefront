@@ -750,3 +750,22 @@ text-decoration: underline;
 .search-bar button:hover {
   background-color: #2980b9;
 }
+/* Color Swatches styles */
+.color-swatches {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.swatch:hover {
+  transform: scale(1.1);
+}
