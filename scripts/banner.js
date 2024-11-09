@@ -33,3 +33,19 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'https://www.google.com';
     });
 });
+// Back-to-Top Button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});

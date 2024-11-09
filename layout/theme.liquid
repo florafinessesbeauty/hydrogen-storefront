@@ -8,19 +8,22 @@
     <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
 </head>
 <body>
-<div id="age-verifier" class="age-verifier">
-    <div class="age-verifier-content">
-        <h2>Are you 18 or older?</h2>
-        <button id="age-yes">Yes</button>
-        <button id="age-no">No</button>
+    <div id="age-verifier" class="age-verifier">
+        <div class="age-verifier-content">
+            <h2>Are you 18 or older?</h2>
+            <button id="age-yes">Yes</button>
+            <button id="age-no">No</button>
+        </div>
     </div>
-</div>
 
     <div class="banner" id="discount-banner">
         <p>Use code SAVE20 for 20% off!</p>
     </div>
+
     {{ content_for_layout }}
     {{ content_for_footer }}
+
+    <button id="back-to-top" class="back-to-top" title="Go to top">Top</button>
     
     <script src="{{ 'banner.js' | asset_url }}"></script>
 </body>
