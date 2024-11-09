@@ -20,8 +20,12 @@
         <p>Use code SAVE20 for 20% off!</p>
     </div>
 
-    <!-- Before/After Image Slider Section -->
-    {% section 'before-after-slider' %}
+    <!-- Before/After Image Slider below the header -->
+    <div class="before-after-slider">
+        <img src="path_to_before_image.jpg" alt="Before" class="before-image">
+        <img src="path_to_after_image.jpg" alt="After" class="after-image">
+        <div class="slider-handle"></div>
+    </div>
 
     {{ content_for_layout }}
     {{ content_for_footer }}
