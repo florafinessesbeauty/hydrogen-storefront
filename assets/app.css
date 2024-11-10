@@ -781,3 +781,16 @@ text-decoration: underline;
   margin: 0 10px;
   font-weight: bold;
 }
+/* In-Menu Promo styles */
+.promo-message {
+  background-color: #ffcccc;
+  text-align: center;
+  padding: 10px 0;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.promo-message p {
+  margin: 0;
+  color: #ff0000;
+}
