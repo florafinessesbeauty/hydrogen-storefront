@@ -4,7 +4,7 @@
     {% if part.url %}
       <a href="{{ part.url }}">{{ part.name }}</a>
     {% else %}
-      <span>{{ part.name }}</a>
+      <span>{{ part.name }}</span>
     {% endif %}
   {% endfor %}
 </nav>
@@ -30,4 +30,9 @@
     <img src="path_to_before_image.jpg" alt="Before" class="before-image">
     <img src="path_to_after_image.jpg" alt="After" class="after-image">
     <div class="slider-handle"></div>
+</div>
+
+<!-- Quick View Button -->
+<div class="product-grid-item">
+  <button class="quick-view-button" data-product-id="{{ product.id }}">Quick View</button>
 </div>
