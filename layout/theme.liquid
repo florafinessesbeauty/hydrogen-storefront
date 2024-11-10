@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_title }}</title>
+    <title>{{ 'header.page_title' | t }}</title>
     {{ content_for_header }}
     <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
 </head>
@@ -23,8 +23,8 @@
     <!-- Search Bar -->
     <div class="search-bar">
         <form action="/search" method="get">
-            <input type="text" name="q" placeholder="Search products..." aria-label="Search">
-            <button type="submit">Search</button>
+            <input type="text" name="q" placeholder="{{ 'header.search_placeholder' | t }}" aria-label="Search">
+            <button type="submit">{{ 'header.search_button' | t }}</button>
         </form>
     </div>
 
@@ -33,14 +33,14 @@
 
     <div id="age-verifier" class="age-verifier">
         <div class="age-verifier-content">
-            <h2>Are you 18 or older?</h2>
-            <button id="age-yes">Yes</button>
-            <button id="age-no">No</button>
+            <h2>{{ 'header.age_verifier_title' | t }}</h2>
+            <button id="age-yes">{{ 'header.yes_button' | t }}</button>
+            <button id="age-no">{{ 'header.no_button' | t }}</button>
         </div>
     </div>
 
     <div class="banner" id="discount-banner">
-        <p>Use code SAVE20 for 20% off!</p>
+        <p>{{ 'header.discount_message' | t }}</p>
     </div>
 
     <!-- Before/After Image Slider below the header -->
@@ -53,7 +53,7 @@
     {{ content_for_layout }}
     {{ content_for_footer }}
 
-    <button id="back-to-top" class="back-to-top" title="Go to top">Top</button>
+    <button id="back-to-top" class="back-to-top" title="{{ 'footer.back_to_top' | t }}">{{ 'footer.back_to_top' | t }}</button>
 
     <script src="{{ 'banner.js' | asset_url }}"></script>
 </body>
