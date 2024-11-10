@@ -12,5 +12,13 @@
   "footer": {
     "contact": "Contact Us",
     "back_to_top": "Back to Top"
+  },
+  "sign_in": {
+    "title": "Sign In",
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "button_text": "Sign In",
+    "create_account_text": "Don't have an account?",
+    "create_account_link": "Create one here."
   }
 }

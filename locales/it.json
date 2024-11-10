@@ -12,5 +12,13 @@
   "footer": {
     "contact": "Contattaci",
     "back_to_top": "Torna in cima"
+  },
+  "sign_in": {
+    "title": "Accedi",
+    "email_label": "Indirizzo email",
+    "password_label": "Password",
+    "button_text": "Accedi",
+    "create_account_text": "Non hai un account?",
+    "create_account_link": "Creane uno qui."
   }
 }
