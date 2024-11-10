@@ -1,10 +1,16 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin language editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-{}
+{
+  "header": {
+    "page_title": "Welcome",
+    "welcome": "Welcome to our store",
+    "search_placeholder": "Search products...",
+    "search_button": "Search",
+    "age_verifier_title": "Are you 18 or older?",
+    "yes_button": "Yes",
+    "no_button": "No",
+    "discount_message": "Use code SAVE20 for 20% off!"
+  },
+  "footer": {
+    "contact": "Contact Us",
+    "back_to_top": "Back to Top"
+  }
+}
