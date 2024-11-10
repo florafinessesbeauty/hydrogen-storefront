@@ -12,9 +12,9 @@ import {
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
-import resetStyles from '~/styles/reset.css';
-import appStyles from '~/styles/app.css';
-import tailwindCss from '~/styles/tailwind.css';
+import resetStyles from '~/app/styles/reset.css';
+import appStyles from '~/app/styles/app.css';
+import tailwindCss from '~/app/styles/tailwind.css';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
 import React from 'react';
@@ -132,7 +132,7 @@ function loadDeferredData({ context }: LoaderFunctionArgs) {
   };
 }
 
-export function Html({ children, lang, data, nonce }: { children?: React.ReactNode, lang: string, data?: any, nonce?: string }) {
+export function Html({ children, lang = 'en', data, nonce }: { children?: React.ReactNode, lang?: string, data?: any, nonce?: string }) {
   return (
     <html lang={lang}>
       <head>
