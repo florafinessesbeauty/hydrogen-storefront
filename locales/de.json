@@ -19,5 +19,9 @@
     "button_text": "Anmelden",
     "create_account_text": "Haben Sie kein Konto?",
     "create_account_link": "Hier erstellen."
+  },
+  "stock_counter": {
+    "in_stock": "Auf Lager",
+    "out_of_stock": "Nicht auf Lager"
   }
 }

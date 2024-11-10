@@ -20,5 +20,9 @@
     "button_text": "Sign In",
     "create_account_text": "Don't have an account?",
     "create_account_link": "Create one here."
+  },
+  "stock_counter": {
+    "in_stock": "In Stock",
+    "out_of_stock": "Out of Stock"
   }
 }

@@ -1,0 +1,7 @@
+<div class="stock-counter">
+  {% if product.available %}
+    <p>{{ 'stock_counter.in_stock' | t }}: {{ product.variants.first.inventory_quantity }}</p>
+  {% else %}
+    <p>{{ 'stock_counter.out_of_stock' | t }}</p>
+  {% endif %}
+</div>

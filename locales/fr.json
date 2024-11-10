@@ -20,5 +20,9 @@
     "button_text": "Se connecter",
     "create_account_text": "Vous n'avez pas de compte?",
     "create_account_link": "Créez-en un ici."
+  },
+  "stock_counter": {
+    "in_stock": "En stock",
+    "out_of_stock": "En rupture de stock"
   }
 }

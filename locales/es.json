@@ -20,5 +20,9 @@
     "button_text": "Iniciar sesión",
     "create_account_text": "¿No tienes una cuenta?",
     "create_account_link": "Crea una aquí."
+  },
+  "stock_counter": {
+    "in_stock": "En stock",
+    "out_of_stock": "Agotado"
   }
 }
