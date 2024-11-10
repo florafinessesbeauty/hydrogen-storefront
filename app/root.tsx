@@ -12,9 +12,9 @@ import {
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
-import resetStyles from '~/styles/reset.css?url';
-import appStyles from '~/styles/app.css?url';
-import tailwindCss from '~/styles/tailwind.css?url';
+import resetStyles from '~/assets/reset.css';
+import appStyles from '~/assets/app.css';
+import tailwindCss from '~/assets/tailwind.css';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
 
