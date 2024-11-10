@@ -1,0 +1,16 @@
+{
+    "header": {
+      "welcome": "Willkommen in unserem Geschäft",
+      "search_placeholder": "Produkte suchen...",
+      "search_button": "Suchen",
+      "age_verifier_title": "Sind Sie 18 Jahre oder älter?",
+      "yes_button": "Ja",
+      "no_button": "Nein",
+      "discount_message": "Verwenden Sie den Code SAVE20 für 20% Rabatt!"
+    },
+    "footer": {
+      "contact": "Kontaktieren Sie uns",
+      "back_to_top": "Zurück nach oben"
+    }
+  }
+  
