@@ -23,5 +23,8 @@
   "stock_counter": {
     "in_stock": "Auf Lager",
     "out_of_stock": "Nicht auf Lager"
+  },
+  "swatch_filters": {
+    "title": "Nach Farbe filtern"
   }
 }

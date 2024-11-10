@@ -24,5 +24,8 @@
   "stock_counter": {
     "in_stock": "Disponibile",
     "out_of_stock": "Esaurito"
+  },
+  "swatch_filters": {
+    "title": "Filtra per colore"
   }
 }

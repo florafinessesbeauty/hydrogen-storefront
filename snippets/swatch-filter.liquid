@@ -1,0 +1,16 @@
+<div class="swatch-filters">
+  <h3>{{ 'swatch_filters.title' | t }}</h3>
+  {% for option in product.options_with_values %}
+    {% if option.name == 'Color' %}
+      <div class="swatch">
+        <span>{{ option.name }}:</span>
+        {% for value in option.values %}
+          <label>
+            <input type="radio" name="color" value="{{ value }}">
+            <span style="background-color: {{ value }};"></span>
+          </label>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
