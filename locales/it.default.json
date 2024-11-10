@@ -1,16 +1,16 @@
 {
-    "header": {
-      "welcome": "Benvenuto nel nostro negozio",
-      "search_placeholder": "Cerca prodotti...",
-      "search_button": "Cerca",
-      "age_verifier_title": "Hai 18 anni o più?",
-      "yes_button": "Sì",
-      "no_button": "No",
-      "discount_message": "Usa il codice SAVE20 per il 20% di sconto!"
-    },
-    "footer": {
-      "contact": "Contattaci",
-      "back_to_top": "Torna in cima"
-    }
+  "header": {
+    "page_title": "Benvenuto",
+    "welcome": "Benvenuto nel nostro negozio",
+    "search_placeholder": "Cerca prodotti...",
+    "search_button": "Cerca",
+    "age_verifier_title": "Hai 18 anni o più?",
+    "yes_button": "Sì",
+    "no_button": "No",
+    "discount_message": "Usa il codice SAVE20 per il 20% di sconto!"
+  },
+  "footer": {
+    "contact": "Contattaci",
+    "back_to_top": "Torna in cima"
   }
-  
+}
