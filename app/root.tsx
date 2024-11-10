@@ -17,6 +17,7 @@ import appStyles from '~/assets/app.css';
 import tailwindCss from '~/assets/tailwind.css';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
+import React from 'react';
 
 export type RootLoader = typeof loader;
 
@@ -131,12 +132,9 @@ function loadDeferredData({ context }: LoaderFunctionArgs) {
   };
 }
 
-export function Layout({ children }: { children?: React.ReactNode }) {
-  const nonce = useNonce();
-  const data = useRouteLoaderData<RootLoader>('root');
-
+export function Html({ children, lang, data, nonce }: { children?: React.ReactNode, lang: string, data?: any, nonce?: string }) {
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -150,7 +148,7 @@ export function Layout({ children }: { children?: React.ReactNode }) {
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout {...data}>{children}</PageLayout>
+            {children}
           </Analytics.Provider>
         ) : (
           children
@@ -182,11 +180,11 @@ export function ErrorBoundary() {
     <div className="route-error">
       <h1>Oops</h1>
       <h2>{errorStatus}</h2>
-      {errorMessage && (
+      {errorMessage ? (
         <fieldset>
           <pre>{errorMessage}</pre>
         </fieldset>
-      )}
+      ) : null}
     </div>
   );
 }
