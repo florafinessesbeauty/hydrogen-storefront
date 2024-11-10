@@ -4,7 +4,7 @@
     {% if part.url %}
       <a href="{{ part.url }}">{{ part.name }}</a>
     {% else %}
-      <span>{{ part.name }}</span>
+      <span>{{ part.name }}</a>
     {% endif %}
   {% endfor %}
 </nav>
@@ -14,8 +14,16 @@
     {{ product.description }}
 </div>
 
+<!-- Product Price -->
+<div class="product-price">
+    {{ product.price }}
+</div>
+
 <!-- Include color swatches -->
 {% include 'color-swatch' %}
+
+<!-- Include countdown timer -->
+{% include 'countdown-timer' %}
 
 <!-- Before/After Image Slider within product description -->
 <div class="before-after-slider">

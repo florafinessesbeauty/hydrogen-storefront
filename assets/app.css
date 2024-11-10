@@ -769,3 +769,15 @@ text-decoration: underline;
 .swatch:hover {
   transform: scale(1.1);
 }
+/* Countdown Timer styles */
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.countdown-timer span {
+  margin: 0 10px;
+  font-weight: bold;
+}
