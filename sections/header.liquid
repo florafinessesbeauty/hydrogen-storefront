@@ -2,7 +2,10 @@
   <nav class="main-navigation">
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="/collections/all">Shop</a></li>
+      <li class="mega-menu-parent">
+        <a href="/collections/all">Shop</a>
+        {% include 'mega-menu' %}
+      </li>
       <li><a href="/pages/about">About Us</a></li>
       <li><a href="/pages/contact">Contact</a></li>
     </ul>
