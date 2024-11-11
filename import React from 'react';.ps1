@@ -15,7 +15,7 @@ const renderWithRouter = (ui: React.ReactElement) => {
     return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
-class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+class ErrorBoundary extends React.Component {
     state = { hasError: false };
 
     static getDerivedStateFromError() {
@@ -230,7 +230,7 @@ test('button has correct data-testid attribute', () => {
 
 test('button has correct role attribute', () => {
     renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false}>
+        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} role="button">
             Add to Cart
         </AddToCartButton>
     );
