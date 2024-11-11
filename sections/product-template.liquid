@@ -19,6 +19,13 @@
     {{ product.price }}
 </div>
 
+<!-- Quantity Pricing -->
+<div class="quantity-pricing">
+  <label for="quantity">Quantity:</label>
+  <input type="number" id="quantity" name="quantity" value="1" min="1">
+  <p>Total Price: <span id="total-price" data-unit-price="{{ product.price | money_without_currency }}">{{ product.price | money }}</span></p>
+</div>
+
 <!-- Include color swatches -->
 {% include 'color-swatch' %}
 

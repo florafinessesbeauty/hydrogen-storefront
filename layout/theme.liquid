@@ -7,6 +7,10 @@
     {{ content_for_header }}
     <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
     <script src="{{ 'infinite-scroll.js' | asset_url }}" defer></script>
+    <script src="{{ 'quick-order.js' | asset_url }}" defer></script>
+    <script src="{{ 'quick-view.js' | asset_url }}" defer></script>
+    <script src="{{ 'rtl-support.js' | asset_url }}" defer></script>
+    <script src="{{ 'sticky-header.js' | asset_url }}" defer></script> <!-- Added for Sticky Header -->
 </head>
 <body>
     <nav class="breadcrumb">
@@ -29,6 +33,9 @@
         </form>
     </div>
 
+    <!-- Combined Listing Section -->
+    {% section 'combined-listing' %}
+
     <!-- Include Countdown Timer -->
     {% include 'countdown-timer' %}
 
@@ -50,6 +57,9 @@
         <img src="path_to_after_image.jpg" alt="After" class="after-image">
         <div class="slider-handle"></div>
     </div>
+
+    {% include 'quick-order-list' %}
+    {% include 'quick-view' %}
 
     {{ content_for_layout }}
     {{ content_for_footer }}

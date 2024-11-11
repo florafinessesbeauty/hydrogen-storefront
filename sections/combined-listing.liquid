@@ -1,0 +1,12 @@
+{% assign combined_products = collections.all.products | limit: 5 %}
+<div class="combined-listing">
+  {% for product in combined_products %}
+    <div class="product-item">
+      <a href="{{ product.url }}">
+        <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price | money }}</p>
+      </a>
+    </div>
+  {% endfor %}
+</div>
