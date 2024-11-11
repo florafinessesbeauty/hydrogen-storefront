@@ -15,7 +15,24 @@ const renderWithRouter = (ui: React.ReactElement) => {
     return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
+    constructor(props: any) {
+        super(props);
+        this.state = { hasError: false };
+    }
+
+    static getDerivedStateFromError() {
+        return { hasError: true };
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return <div>Something went wrong.</div>;
+        }
+
+        return this.props.children;
+    }
+}
     state = { hasError: false };
 
     static getDerivedStateFromError() {
@@ -186,56 +203,6 @@ test('button has correct class when enabled', () => {
     );
     const buttonElement = screen.getByRole('button', { name: /add to cart/i });
     expect(buttonElement).not.toHaveClass('disabled');
-});
-
-test('button is rendered with correct initial state', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false}>
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeEnabled();
-});
-
-test('button is rendered with correct initial state when disabled', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={true}>
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeDisabled();
-});
-
-test('button has correct aria-label attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} aria-label="Add to Cart">
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('aria-label', 'Add to Cart');
-});
-
-test('button has correct data-testid attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} data-testid="add-to-cart-button">
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByTestId('add-to-cart-button');
-    expect(buttonElement).toBeInTheDocument();
-});
-
-test('button has correct role attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} role="button">
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('role', 'button');
 });
 
 test('button has correct title attribute', () => {

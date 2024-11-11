@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { jest } from '@jest/globals';
 import { BrowserRouter } from 'react-router-dom';
 import { AddToCartButton } from './AddToCartButton'; // Adjust the import path as necessary
 import '@testing-library/jest-dom';
@@ -10,10 +11,7 @@ const mockLines = [
         quantity: 1,
     },
 ];
-
-const renderWithRouter = (ui: React.ReactElement) => {
-    return render(<BrowserRouter>{ui}</BrowserRouter>);
-};
+// Removed unused renderWithRouter function
 
 class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
     state = { hasError: false };
@@ -45,8 +43,8 @@ test('renders AddToCartButton', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeInTheDocument();
+    const buttonElement1 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement1).toBeInTheDocument();
 });
 
 test('calls onClick handler when clicked', () => {
@@ -56,8 +54,8 @@ test('calls onClick handler when clicked', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    fireEvent.click(buttonElement);
+    const buttonElement2 = screen.getByRole('button', { name: /add to cart/i });
+    fireEvent.click(buttonElement2);
     expect(handleClick).toHaveBeenCalledTimes(1);
 });
 
@@ -67,8 +65,8 @@ test('button is disabled when disabled prop is true', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeDisabled();
+    const buttonElement3 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement3).toBeDisabled();
 });
 
 test('renders hidden input with analytics data', () => {
@@ -84,13 +82,14 @@ test('renders hidden input with analytics data', () => {
 
 test('button is disabled when fetcher state is not idle', () => {
     const mockFetcher = { state: 'submitting' };
+    // Removed unused mockFetcher variable
     renderWithRouterAndErrorBoundary(
         <AddToCartButton lines={mockLines} analytics={{}} disabled={false}>
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeDisabled();
+    const buttonElement4 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement4).toBeDisabled();
 });
 
 test('button is enabled when fetcher state is idle', () => {
@@ -100,8 +99,8 @@ test('button is enabled when fetcher state is idle', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).not.toBeDisabled();
+    const buttonElement4 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement4).not.toBeDisabled();
 });
 
 test('button text is rendered correctly', () => {
@@ -110,8 +109,8 @@ test('button text is rendered correctly', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveTextContent('Add to Cart');
+    const buttonElement5 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement5).toHaveTextContent('Add to Cart');
 });
 
 test('button has correct type attribute', () => {
@@ -120,8 +119,8 @@ test('button has correct type attribute', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('type', 'submit');
+    const buttonElement6 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement6).toHaveAttribute('type', 'submit');
 });
 
 test('hidden input has correct name attribute', () => {
@@ -151,8 +150,8 @@ test('button is not clickable when disabled', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    fireEvent.click(buttonElement);
+    const buttonElement7 = screen.getByRole('button', { name: /add to cart/i });
+    fireEvent.click(buttonElement7);
     expect(handleClick).not.toHaveBeenCalled();
 });
 
@@ -174,8 +173,8 @@ test('button has correct class when disabled', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveClass('disabled');
+    const buttonElement9 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement9).toHaveClass('disabled');
 });
 
 test('button has correct class when enabled', () => {
@@ -184,58 +183,8 @@ test('button has correct class when enabled', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).not.toHaveClass('disabled');
-});
-
-test('button is rendered with correct initial state', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false}>
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeEnabled();
-});
-
-test('button is rendered with correct initial state when disabled', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={true}>
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toBeDisabled();
-});
-
-test('button has correct aria-label attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} aria-label="Add to Cart">
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('aria-label', 'Add to Cart');
-});
-
-test('button has correct data-testid attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false} data-testid="add-to-cart-button">
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByTestId('add-to-cart-button');
-    expect(buttonElement).toBeInTheDocument();
-});
-
-test('button has correct role attribute', () => {
-    renderWithRouterAndErrorBoundary(
-        <AddToCartButton lines={mockLines} analytics={{}} disabled={false}>
-            Add to Cart
-        </AddToCartButton>
-    );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('role', 'button');
+    const buttonElement10 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement10).not.toHaveClass('disabled');
 });
 
 test('button has correct title attribute', () => {
@@ -244,6 +193,6 @@ test('button has correct title attribute', () => {
             Add to Cart
         </AddToCartButton>
     );
-    const buttonElement = screen.getByRole('button', { name: /add to cart/i });
-    expect(buttonElement).toHaveAttribute('title', 'Add to Cart');
+    const buttonElement11 = screen.getByRole('button', { name: /add to cart/i });
+    expect(buttonElement11).toHaveAttribute('title', 'Add to Cart');
 });

@@ -1,3 +1,4 @@
+import React from 'react';
 import {Await, Link} from '@remix-run/react';
 import {Suspense, useId} from 'react';
 import type {
@@ -16,44 +17,26 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 
 interface PageLayoutProps {
-  cart: Promise<CartApiQueryFragment | null>;
-  footer: Promise<FooterQuery | null>;
+  children: React.ReactNode;
   header: HeaderQuery;
-  isLoggedIn: Promise<boolean>;
   publicStoreDomain: string;
-  children?: React.ReactNode;
+  cart: CartApiQueryFragment;
 }
 
-export function PageLayout({
-  cart,
-  children = null,
-  footer,
-  header,
-  isLoggedIn,
-  publicStoreDomain,
-}: PageLayoutProps) {
+export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
   return (
-    <Aside.Provider>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
-      )}
+    <div className="page-layout">
+      <header>
+        <h1>My Shopify Store</h1>
+        {/* Add navigation and other header elements here */}
+      </header>
       <main>{children}</main>
-      <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
-    </Aside.Provider>
+      <footer>
+        <p>&copy; {new Date().getFullYear()} My Shopify Store</p>
+      </footer>
+    </div>
   );
-}
+};
 
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   return (

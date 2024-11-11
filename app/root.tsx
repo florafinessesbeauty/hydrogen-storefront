@@ -6,18 +6,16 @@ import {
   Outlet,
   Scripts,
   useRouteError,
+  useRouteLoaderData,
   ScrollRestoration,
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
-import resetStyles from '~/styles/reset.css';
-import appStyles from '~/styles/app.css'; // Ensure this path is correct
-import tailwindCss from '~/styles/tailwind.css';
+import resetStyles from '~/styles/reset.css?url';
+import appStyles from '~/styles/app.css?url';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
-import React from 'react';
-import { Helmet } from 'react-helmet';
 
 export type RootLoader = typeof loader;
 
@@ -34,11 +32,16 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
-    { rel: 'stylesheet', href: tailwindCss },
     { rel: 'stylesheet', href: resetStyles },
-    { rel: 'stylesheet', href: appStyles }, // Ensure this path is correct
-    { rel: 'preconnect', href: 'https://cdn.shopify.com' },
-    { rel: 'preconnect', href: 'https://shop.app' },
+    { rel: 'stylesheet', href: appStyles },
+    {
+      rel: 'preconnect',
+      href: 'https://cdn.shopify.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://shop.app',
+    },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
   ];
 }
@@ -46,11 +49,12 @@ export function links() {
 export async function loader(args: LoaderFunctionArgs) {
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
+
   const { storefront, env } = args.context;
 
   return defer({
-    critical: criticalData,
-    deferred: deferredData,
+    ...deferredData,
+    ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
       storefront,
@@ -68,6 +72,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
 async function loadCriticalData({ context }: LoaderFunctionArgs) {
   const { storefront } = context;
+
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
@@ -76,15 +81,23 @@ async function loadCriticalData({ context }: LoaderFunctionArgs) {
       },
     }),
   ]);
+
   return { header };
 }
 
 function loadDeferredData({ context }: LoaderFunctionArgs) {
   const { storefront, customerAccount, cart } = context;
-  const footer = storefront.query(FOOTER_QUERY, {
-    cache: storefront.CacheLong(),
-    variables: { footerMenuHandle: 'footer' },
-  }).catch(handleError);
+  const footer = storefront
+    .query(FOOTER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+        footerMenuHandle: 'footer',
+      },
+    })
+    .catch((error) => {
+      console.error(error);
+      return null;
+    });
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
@@ -92,38 +105,62 @@ function loadDeferredData({ context }: LoaderFunctionArgs) {
   };
 }
 
-const handleError = (error: any): null => {
-  console.error(error);
-  return null;
-};
+export function Layout({ children }: { children?: React.ReactNode }) {
+  const nonce = useNonce();
+  const data = useRouteLoaderData<RootLoader>('root');
+
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {data ? (
+          <Analytics.Provider
+            cart={data.cart}
+            shop={data.shop}
+            consent={data.consent}
+          >
+            <PageLayout {...data}>{children}</PageLayout>
+          </Analytics.Provider>
+        ) : (
+          children
+        )}
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
+      </body>
+    </html>
+  );
+}
 
 export default function App() {
-  return (
-    <>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>My App</title>
-      </Helmet>
-      <div>
-        {/* Your content here */}
-      </div>
-    </>
-  );
+  return <Outlet />;
 }
 
 export function ErrorBoundary() {
   const error = useRouteError();
-  const errorMessage = isRouteErrorResponse(error)
-    ? error.data.message
-    : (error as Error)?.message ?? 'Unknown error';
+  let errorMessage = 'Unknown error';
+  let errorStatus = 500;
+
+  if (isRouteErrorResponse(error)) {
+    errorMessage = error?.data?.message ?? error.data;
+    errorStatus = error.status;
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+
   return (
-    <>
-      <Meta />
-      <div>
-        <h1>There was an error</h1>
-        <p>{errorMessage}</p>
-      </div>
-      <Scripts />
-    </>
+    <div className="route-error">
+      <h1>Oops</h1>
+      <h2>{errorStatus}</h2>
+      {errorMessage && (
+        <fieldset>
+          <pre>{errorMessage}</pre>
+        </fieldset>
+      )}
+    </div>
   );
 }

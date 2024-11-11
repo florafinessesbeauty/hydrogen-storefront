@@ -1051,4 +1051,8 @@
     width: 50px;
     margin-right: 10px;
   }
-  
+  /* app.css */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }

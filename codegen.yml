@@ -1,0 +1,7 @@
+schema: "https://your-graphql-endpoint.com/graphql" # Replace with your actual GraphQL endpoint
+documents: "app/**/*.tsx"
+generates:
+  app/storefrontapi.generated.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
