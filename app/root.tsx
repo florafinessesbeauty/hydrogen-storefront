@@ -6,35 +6,29 @@ import {
   Outlet,
   Scripts,
   useRouteError,
-  useRouteLoaderData,
   ScrollRestoration,
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css';
-import appStyles from '~/styles/app.css';
+import appStyles from '~/styles/app.css'; // Ensure this path is correct
 import tailwindCss from '~/styles/tailwind.css';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
 export type RootLoader = typeof loader;
 
-/**
- * This is important to avoid re-fetching root queries on sub-navigations
- */
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   formMethod,
   currentUrl,
   nextUrl,
   defaultShouldRevalidate,
 }) => {
-  // revalidate when a mutation is performed e.g add to cart, login...
   if (formMethod && formMethod !== 'GET') return true;
-
-  // revalidate when manually revalidating via useRevalidator
   if (currentUrl.toString() === nextUrl.toString()) return true;
-
   return defaultShouldRevalidate;
 };
 
@@ -42,31 +36,21 @@ export function links() {
   return [
     { rel: 'stylesheet', href: tailwindCss },
     { rel: 'stylesheet', href: resetStyles },
-    { rel: 'stylesheet', href: appStyles },
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    { rel: 'stylesheet', href: appStyles }, // Ensure this path is correct
+    { rel: 'preconnect', href: 'https://cdn.shopify.com' },
+    { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
   ];
 }
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   const { storefront, env } = args.context;
 
   return defer({
-    ...deferredData,
-    ...criticalData,
+    critical: criticalData,
+    deferred: deferredData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
       storefront,
@@ -76,50 +60,31 @@ export async function loader(args: LoaderFunctionArgs) {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
       withPrivacyBanner: false,
-      // localize the privacy banner
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
   });
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
 async function loadCriticalData({ context }: LoaderFunctionArgs) {
   const { storefront } = context;
-
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {
-        headerMenuHandle: 'main-menu', // Adjust to your header menu handle
+        headerMenuHandle: 'main-menu',
       },
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
-
   return { header };
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
 function loadDeferredData({ context }: LoaderFunctionArgs) {
   const { storefront, customerAccount, cart } = context;
-
-  // defer the footer query (below the fold)
-  const footer = storefront
-    .query(FOOTER_QUERY, {
-      cache: storefront.CacheLong(),
-      variables: {
-        footerMenuHandle: 'footer', // Adjust to your footer menu handle
-      },
-    })
-    .catch(handleError);
+  const footer = storefront.query(FOOTER_QUERY, {
+    cache: storefront.CacheLong(),
+    variables: { footerMenuHandle: 'footer' },
+  }).catch(handleError);
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
@@ -128,24 +93,37 @@ function loadDeferredData({ context }: LoaderFunctionArgs) {
 }
 
 const handleError = (error: any): null => {
-  // Log query errors, but don't throw them so the page can still render
   console.error(error);
   return null;
 };
-
-import React, { Fragment } from 'react';
-import Helmet from 'react-helmet';
 
 export default function App() {
   return (
     <>
       <Helmet>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <title>My App</title>
       </Helmet>
       <div>
         {/* Your content here */}
       </div>
-    </Fragment>
+    </>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const errorMessage = isRouteErrorResponse(error)
+    ? error.data.message
+    : (error as Error)?.message ?? 'Unknown error';
+  return (
+    <>
+      <Meta />
+      <div>
+        <h1>There was an error</h1>
+        <p>{errorMessage}</p>
+      </div>
+      <Scripts />
+    </>
   );
 }
