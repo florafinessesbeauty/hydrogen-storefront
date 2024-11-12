@@ -1,22 +1,11 @@
 module.exports = {
-  testEnvironment: 'jest-environment-jsdom',
-  setupFiles: ['./jest.setup.js'],
-  transform: {
-    '^.+\\.(ts|tsx)$': 'babel-jest',
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!@web3-storage/multipart-parser/esm/)',
-  ],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  modulePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/dist/',
-    '<rootDir>/build/',
-    '<rootDir>/out/',
-    '<rootDir>/hydrogen-storefront/hydrogen-storefront/',
-    '<rootDir>/Documents/your-project-directory/',
-    '<rootDir>/source/repos/florafinessesbeauty/beautyfortintegration/',
-    '<rootDir>/Downloads/cli-10.9.0/cli-10.9.0/',
-    '<rootDir>/.vscode/',
-  ],
+  transform: {
+    '^.+\\.stories\\.tsx?$': '<rootDir>/storyshots.inject',
+    '\\.[jt]sx?$': 'babel-jest',
+  },
 };

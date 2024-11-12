@@ -1,4 +1,10 @@
-import { useNonce, getShopAnalytics, Analytics } from '@shopify/hydrogen';
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
+
+import React from 'react';
+import { useNonce, ShopifyAnalytics, Analytics } from '@shopify/hydrogen';
 import { defer, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import {
   Links,
@@ -16,6 +22,7 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
+import { useNonce } from '~/utils'; // Adjust the import path as necessary
 
 export type RootLoader = typeof loader;
 
@@ -46,8 +53,14 @@ export function links() {
   ];
 }
 
-export async function loader(args: LoaderFunctionArgs) {
-  const deferredData = loadDeferredData(args);
+interface Env {
+  PUBLIC_STORE_DOMAIN: string;
+  PUBLIC_CHECKOUT_DOMAIN: string;
+  PUBLIC_STOREFRONT_API_TOKEN: string;
+}
+
+export async function loader(args: LoaderFunctionArgs & { context: { env: Env, storefront: any, customerAccount: any, cart: any } }) {
+  const deferredData = await loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
 
   const { storefront, env } = args.context;
@@ -56,21 +69,20 @@ export async function loader(args: LoaderFunctionArgs) {
     ...deferredData,
     ...criticalData,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
-    shop: getShopAnalytics({
-      storefront,
-      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
+    shop: ShopifyAnalytics({
+      cookieDomain: env.PUBLIC_STORE_DOMAIN,
     }),
     consent: {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
       withPrivacyBanner: false,
-      country: args.context.storefront.i18n.country,
-      language: args.context.storefront.i18n.language,
+      country: (args.context.storefront as any).i18n.country,
+      language: (args.context.storefront as any).i18n.language,
     },
   });
 }
 
-async function loadCriticalData({ context }: LoaderFunctionArgs) {
+async function loadCriticalData({ context }: LoaderFunctionArgs & { context: { storefront: any } }) {
   const { storefront } = context;
 
   const [header] = await Promise.all([
@@ -85,19 +97,21 @@ async function loadCriticalData({ context }: LoaderFunctionArgs) {
   return { header };
 }
 
-function loadDeferredData({ context }: LoaderFunctionArgs) {
+async function loadDeferredData({ context }: LoaderFunctionArgs & { context: { storefront: any, customerAccount: any, cart: any } }) {
   const { storefront, customerAccount, cart } = context;
-  const footer = storefront
+
+  const footer = await storefront
     .query(FOOTER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {
         footerMenuHandle: 'footer',
       },
     })
-    .catch((error) => {
+    .catch((error: Error) => {
       console.error(error);
       return null;
     });
+
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),

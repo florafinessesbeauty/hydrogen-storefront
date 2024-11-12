@@ -1,4 +1,4 @@
-import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
+import { Link, useLoaderData, type V2_MetaFunction as MetaFunction } from '@remix-run/react';
 import {
   Money,
   getPaginationVariables,
@@ -59,7 +59,7 @@ export default function Orders() {
 
 // src/locales/en_index.tsx
 import React from 'react';
-import App from '../components/App';
+import App from '~/components/App';
 
 const EnIndex: React.FC = () => {
   return (

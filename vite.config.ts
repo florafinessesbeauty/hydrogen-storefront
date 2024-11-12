@@ -1,46 +1,23 @@
 import { defineConfig } from 'vite';
-import { hydrogen } from '@shopify/hydrogen/vite';
-import { oxygen } from '@shopify/mini-oxygen/vite';
-import { vitePlugin as remix } from '@remix-run/dev';
+import react from '@vitejs/plugin-react';
+import hydrogen from '@shopify/hydrogen/plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    react(),
     hydrogen(),
-    oxygen(),
-    remix({
-      presets: [hydrogen.preset()],
-      future: {
-        v3_fetcherPersist: true,
-        v3_relativeSplatPath: true,
-        v3_throwAbortReason: true,
-        v3_singleFetch: true,
-        v3_lazyRouteDiscovery: true,
-        unstable_optimizeDeps: true,
-      },
-    }),
     tsconfigPaths(),
   ],
-  build: {
-    // Allow a strict Content-Security-Policy without inlining assets as base64:
-    assetsInlineLimit: 0,
-  },
-  ssr: {
-    optimizeDeps: {
-      /**
-       * Include dependencies here if they throw CJS<>ESM errors.
-       * For example, for the following error:
-       *
-       * > ReferenceError: module is not defined
-       * >   at /Users/.../node_modules/example-dep/index.js:1:1
-       *
-       * Include 'example-dep' in the array below.
-       * @see https://vitejs.dev/config/dep-optimization-options
-       */
-      include: [],
+  css: {
+    postcss: {
+      plugins: [tailwindcss, autoprefixer],
     },
+  },
+  build: {
+    assetsInlineLimit: 0, // Allow a strict Content-Security-Policy without inlining assets as base64
   },
   server: {
     port: 3000,

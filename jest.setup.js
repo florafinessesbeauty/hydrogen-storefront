@@ -1,5 +1,2 @@
-import fetchMock from 'jest-fetch-mock';
-
-fetchMock.enableMocks();
-
-global.Response = require('node-fetch').Response;
+// jest.setup.js
+import '@testing-library/jest-dom/extend-expect';

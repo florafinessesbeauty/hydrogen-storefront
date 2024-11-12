@@ -8,7 +8,7 @@ import type {
   RecommendedProductsQuery,
 } from '~/storefrontapi.generated'; // Ensure this module exists or correct the path
 import React from 'react';
-import ReactDOM from 'react-dom';
+// Removed duplicate import of ReactDOM
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import App from '~/components/App';
 import { gql, useQuery } from '@apollo/client';
@@ -70,17 +70,23 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-function loadDeferredData({context}: LoaderFunctionArgs) {
-  return context.storefront
-    .query(print(RECOMMENDED_PRODUCTS_QUERY))
-    .then((recommendedProducts) => {
-      return { recommendedProducts };
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return { recommendedProducts: null };
-    });
+function loadDeferredData({context}: LoaderFunctionArgs & { context: { storefront: { query: (query: string) => Promise<RecommendedProductsQuery> } } }) {
+  interface DeferredData {
+    recommendedProducts: RecommendedProductsQuery | null;
+  }
+
+  function loadDeferredData({context}: LoaderFunctionArgs): Promise<DeferredData> {
+    return context.storefront
+      .query<RecommendedProductsQuery>(print(RECOMMENDED_PRODUCTS_QUERY))
+      .then((recommendedProducts) => {
+        return { recommendedProducts };
+      })
+      .catch((error) => {
+        // Log query errors, but don't throw them so the page can still render
+        console.error(error);
+        return { recommendedProducts: null };
+      });
+  }
 }
 
 export function Homepage() {
@@ -221,13 +227,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById('root')
-);
-
 const HomePage: React.FC = () => {
   const { data, loading, error } = useQuery<RecommendedProductsQuery>(RECOMMENDED_PRODUCTS_QUERY, {
     variables: {
@@ -303,3 +302,18 @@ export function Orders() {
     />
   );
 }
+
+// src/index.tsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import MyComponent from '~/components/MyComponent';
+
+const App: React.FC = () => {
+  return (
+    <div>
+      <MyComponent />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
