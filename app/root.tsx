@@ -4,7 +4,7 @@ declare module '*.svg' {
 }
 
 import React from 'react';
-import { useNonce, ShopifyAnalytics, Analytics } from '@shopify/hydrogen';
+import { useNonce, ShopAnalytics, Analytics } from '@shopify/hydrogen';
 import { defer, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import {
   Links,
@@ -23,6 +23,8 @@ import appStyles from '~/styles/app.css?url';
 import { PageLayout } from '~/components/PageLayout';
 import { FOOTER_QUERY, HEADER_QUERY } from '~/lib/fragments';
 import { useNonce } from '~/utils'; // Adjust the import path as necessary
+
+import '~/styles/app.css?url';
 
 export type RootLoader = typeof loader;
 

@@ -1,18 +1,15 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "target": "es5",
+    "lib": ["dom", "es2015"],
     "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": ["src/components/*"]
-    },
-    "types": ["tailwindcss", "jest", "node"],
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"]
-}
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
 }

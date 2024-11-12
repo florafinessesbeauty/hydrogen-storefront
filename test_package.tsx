@@ -60,23 +60,3 @@
     "defaults"
   ]
 }
-
-// jest.config.test.js
-module.exports = {
-  transform: {
-    '^.+\\.(ts|tsx)$': 'babel-jest',
-  },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  testEnvironment: 'jest-environment-jsdom',
-  modulePathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/dist/',
-    '<rootDir>/build/',
-    '<rootDir>/out/',
-    '<rootDir>/hydrogen-storefront/hydrogen-storefront/',
-    '<rootDir>/Documents/your-project-directory/',
-    '<rootDir>/source/repos/florafinessesbeauty/beautyfortintegration/',
-    '<rootDir>/Downloads/cli-10.9.0/cli-10.9.0/',
-    '<rootDir>/.vscode/',
-  ],
-};
