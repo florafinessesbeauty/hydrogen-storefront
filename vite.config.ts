@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import hydrogen from '@shopify/hydrogen/plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from 'tailwindcss';
-import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   plugins: [
@@ -13,7 +12,7 @@ export default defineConfig({
   ],
   css: {
     postcss: {
-      plugins: [tailwindcss, autoprefixer],
+      plugins: [require('tailwindcss'), require('autoprefixer')],
     },
   },
   build: {
