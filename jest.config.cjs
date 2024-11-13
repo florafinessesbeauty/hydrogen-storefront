@@ -1,12 +1,26 @@
 // jest.config.cjs
 module.exports = {
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  transform: {
+    '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  testEnvironment: 'jest-environment-jsdom',
+  setupFiles: ['<rootDir>/jest.setup.js'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!@web3-storage/multipart-parser/esm/)',
+  ],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  transform: {
-    '^.+\\.stories\\.tsx?$': '<rootDir>/storyshots.inject.cjs',
-    '\\.[jt]sx?$': 'babel-jest',
-  },
+  modulePathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/dist/',
+    '<rootDir>/build/',
+    '<rootDir>/out/',
+    '<rootDir>/hydrogen-storefront/hydrogen-storefront/',
+    '<rootDir>/Documents/your-project-directory/',
+    '<rootDir>/source/repos/florafinessesbeauty/beautyfortintegration/',
+    '<rootDir>/Downloads/cli-10.9.0/cli-10.9.0/',
+    '<rootDir>/.vscode/',
+  ],
 };

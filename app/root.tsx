@@ -16,6 +16,7 @@ import {
   ScrollRestoration,
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
+  LiveReload,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
@@ -152,8 +153,22 @@ export function Layout({ children }: { children?: React.ReactNode }) {
   );
 }
 
+import { Outlet } from 'react-router-dom';
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Outlet />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </>
+  );
 }
 
 export function ErrorBoundary() {

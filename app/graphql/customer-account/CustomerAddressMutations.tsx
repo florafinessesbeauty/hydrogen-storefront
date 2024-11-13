@@ -1,11 +1,16 @@
-import { gql } from 'graphql-tag';
 import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 
-export const CUSTOMER_ADDRESS_UPDATE = gql`
+const client = new ApolloClient({
+  uri: 'https://your-graphql-endpoint.com/graphql', // Replace with your GraphQL endpoint
+  cache: new InMemoryCache(),
+});
+
+const CUSTOMER_ADDRESS_UPDATE = gql`
   mutation customerAddressUpdate($customerAccessToken: String!, $id: ID!, $address: MailingAddressInput!) {
     customerAddressUpdate(customerAccessToken: $customerAccessToken, id: $id, address: $address) {
-      userErrors {
+      customerUserErrors {
         code
         field
         message
@@ -22,31 +27,6 @@ export const CUSTOMER_ADDRESS_UPDATE = gql`
         phone
         province
         zip
-      }
-    }
-  }
-`;
-
-export const CUSTOMER_ADDRESS_DELETE = gql`
-  mutation customerAddressDelete($customerAccessToken: String!, $id: ID!) {
-    customerAddressDelete(customerAccessToken: $customerAccessToken, id: $id) {
-      userErrors {
-        field
-        message
-      }
-    }
-  }
-`;
-
-export const CUSTOMER_ADDRESS_CREATE = gql`
-  mutation customerAddressCreate($customerAccessToken: String!, $address: MailingAddressInput!) {
-    customerAddressCreate(customerAccessToken: $customerAccessToken, address: $address) {
-      customerAddress {
-        id
-      }
-      userErrors {
-        field
-        message
       }
     }
   }
@@ -163,4 +143,12 @@ const UpdateAddressForm: React.FC = () => {
   );
 };
 
-export default UpdateAddressForm;
+const App: React.FC = () => {
+  return (
+    <ApolloProvider client={client}>
+      <UpdateAddressForm />
+    </ApolloProvider>
+  );
+};
+
+export default App;
